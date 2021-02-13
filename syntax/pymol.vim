@@ -210,6 +210,7 @@ syntax keyword pymolCommand
   \ ramp_update
   \ ray
   \ rebuild
+  \ recall
   \ recolor
   \ redo
   \ reference
@@ -260,6 +261,7 @@ syntax keyword pymolCommand
   \ split_chains
   \ split_states
   \ stereo
+  \ store
   \ super
   \ symexp
   \ symmetry_copy
@@ -1051,20 +1053,131 @@ syntax keyword pymolSetting
   \ wizard_prompt_mode
   \ wrap_output
 
+syntax keyword pymolDisplay
+  \ line
+  \ cartoon
+  \ spheres
+  \ mesh
+  \ surface
+  \ ribbon
+
+syntax keyword pymolElement 
+  \ C   CA  CB  CD  CD1 CD2 CE  CE1 CE2 CE3 
+  \ CG  CG1 CG2 CH2 CZ  CZ2 CZ3 
+  \ N   ND1 ND2 NE  NE1 NE2 NH1 NH2 NZ  
+  \ O   OD1 OD2 OE1 OE2 OG  OG1 OH  OXT 
+  \ SD  SG  
+  \ c   ca  cb  cd  cd1 cd2 ce  ce1 ce2 ce3 
+  \ cg  cg1 cg2 ch2 cz  cz2 cz3 
+  \ n   nd1 nd2 ne  ne1 ne2 nh1 nh2 nz  
+  \ o   od1 od2 oe1 oe2 og  og1 oh  oxt 
+  \ sd  sg  
+  \ HOH hoh 
+  \ ZN zn SR sr
+
+" This is an incomplete list
+syntax keyword pymolAPI
+  \ cmd.load
+  \ cmd.bg_color
+  \ cmd.show
+  \ util.protein_vacuum_esp
+  \ util.cnc
+  \ preset.pretty
+  \ preset.publication
+
+syntax keyword pymolColor
+  \  aquamarine
+  \  black
+  \  blue
+  \  bluewhite
+  \  brightorange
+  \  brown
+  \  chartreuse
+  \  chocolate
+  \  cyan
+  \  darksalmon
+  \  deepblue
+  \  deepolive
+  \  deeppurple
+  \  deepsalmon
+  \  deepteal
+  \  density
+  \  dirtyviolet
+  \  firebrick
+  \  forest
+  \  gray10
+  \  gray20
+  \  gray30
+  \  gray40
+  \  gray50
+  \  gray60
+  \  gray70
+  \  gray80
+  \  gray90
+  \  green
+  \  greencyan
+  \  hotpink
+  \  lightblue
+  \  lightmagenta
+  \  lightorange
+  \  lightorange
+  \  lightpink
+  \  lightteal
+  \  lime
+  \  limegreen
+  \  limon
+  \  magenta
+  \  marine
+  \  olive
+  \  orange
+  \  palecyan
+  \  palegreen
+  \  paleyellow
+  \  pink
+  \  purple
+  \  purpleblue
+  \  raspberry
+  \  red
+  \  ruby
+  \  salmon
+  \  sand
+  \  skyblue
+  \  slate
+  \  smudge
+  \  splitpea
+  \  teal
+  \  tv_blue
+  \  tv_green
+  \  tv_orange
+  \  tv_red
+  \  tv_yellow
+  \  violet
+  \  violetpurple
+  \  warmpink
+  \  wheat
+  \  white
+  \  yellow
+  \  yelloworange
+
 syntax match   pymolOperator1   "[!|&,()?]"
 syntax match   pymolOperator2   "([|aew].)|(b[rfmso].)|(nbr.)|([?][?][?])"
 syntax keyword pymolOperatorK   and or not in gap around within of byres bymolecule byfragment bysegment byobject bycell neighbor extend
   \ first last like bychain bycalpha bound_to expand near_to beyond
 syntax cluster pymolOperator    contains=pymolOperator1,pymolOperator2,pymolOperatorK
+
 syntax keyword pymolSelector    resi resn name alt chain segi flag numeric_type text_type id index ss b q formal_charge partial_charge
   \ model rank elem rep color pepseq
-  \ all enabled visible bonded protected masked
+  \ all enabled visible bonded protected masked everything
   \ organic inorganic solvent polymer guide hetatm hydrogens metals
   \ backbone sidechain donors acceptors
   \ center origin
+  \ n. i.
 
 syntax match   pymolComment     "^#.*$"
-syntax match   pymolNumber      "*[0-9](.[0-9])?"
+"syntax match   pymolNumber      "*[0-9](.[0-9])?"
+syntax match   pymolNumber      "\<\d\+\>"
+" floating point number, with dot, optional exponent
+syntax match   pymolNumber      "\d\+\.\d*\(e[-+]\=\d\+\)\=[fl]\="
 syntax match   pymolString1     "'[^']*'"
 syntax match   pymolString2     '"[^"]*"'
 syntax cluster pymolString      contains=pymolString1,pymolString2
@@ -1083,6 +1196,9 @@ syn match      pymolPython      "^/.*" contains=@python
 hi def link    pymolCommand     Statement
 hi def link    pymolIdentifier  Symbol
 hi def link    pymolOperator    Operator
+hi def link    pymolOperatorK   Operator
+hi def link    pymolOperator1   Operator
+hi def link    pymolOperator2   Operator
 hi def link    pymolSkip        Comment
 hi def link    pymolComment     Comment
 hi def link    pymolString      String
@@ -1091,6 +1207,14 @@ hi def link    pymolPunctuation SpecialChar
 hi def link    pymolSetting     Identifier
 hi def link    pymolRun         Include
 hi def link    pymolKwArg       Operator
+hi def link    pymolString1     String
+hi def link    pymolString2     String
+hi def link    pymolNumber      Number
+hi def link    pymolDisplay     Special
+hi def link    pymolAPI         Macro
+
+highlight pymolColor  ctermfg=Green ctermbg=Brown
+highlight pymolElement ctermfg=Green ctermbg=DarkCyan
 
 let b:current_syntax = "pymol"
 
